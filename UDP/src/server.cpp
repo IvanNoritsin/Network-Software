@@ -19,6 +19,8 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
+    std::cout << "Server started...\n";
+
     auto loss_map = transport::parse_loss_pattern(argv[1]);
 
     int sock = socket(AF_INET, SOCK_DGRAM, 0);
@@ -54,7 +56,7 @@ int main(int argc, char* argv[]) {
         }
 
         if (loss_map[header.seq] > 0) {
-            std::cout << "Simulating drop of packet " << header.seq << "\n";
+            std::cout << "Packet:\t" << header.seq << "\tDropped\n";
             loss_map[header.seq]--;
             continue;
         }
@@ -64,6 +66,6 @@ int main(int argc, char* argv[]) {
         sendto(sock, &header.seq, sizeof(header.seq), 0,
                (sockaddr*)&client_addr, len);
 
-        std::cout << "Received and ACKed packet: " << header.seq << "\n";
+        std::cout << "Packet:\t" << header.seq << "\tReceived and ACKed" <<"\n";
     }
 }

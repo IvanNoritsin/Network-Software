@@ -62,11 +62,11 @@ int main(int argc, char* argv[]) {
                 recvfrom(sock, &ack, sizeof(ack), 0, (sockaddr*)&server_addr, &len);
                 if (ack == seq) break;
             } else {
-                std::cout << "Timeout, resending seq: " << seq << "\n";
+                std::cout << "Packet:\t" << seq << "\tTimeout. Resending" << "\n";
             }
         }
 
-        std::cout << "Sent and confirmed seq: " << seq << "\n";
+        std::cout << "Packet:\t" << seq << "\tSent and ACKed" << "\n";
         seq++;
     }
 
