@@ -1,0 +1,13 @@
+#!/bin/sh
+
+case "$1" in
+  bound)
+    echo "[udhcpc] Bound: $ip/$subnet via $router on $interface"
+    ip addr add "$ip/$subnet" dev "$interface"
+    ip route add default via "$router" dev "$interface"
+    ;;
+  renew|deconfig)
+    echo "[udhcpc] Releasing $interface"
+    ip addr flush dev "$interface"
+    ;;
+esac
